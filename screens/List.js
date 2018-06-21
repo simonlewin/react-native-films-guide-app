@@ -15,6 +15,7 @@ class ListScreen extends Component {
     this.props.navigation.navigate('Detail', {
       title: item.name,
       item: item,
+      imdbUrl: item.imdbUrl,
     });
   }
 

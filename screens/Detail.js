@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 
 import moment from 'moment'
+
+import { MaterialIcons } from '@expo/vector-icons';
+import { WebBrowser } from 'expo';
 
 class DetailScreen extends Component {
 
@@ -50,6 +53,14 @@ class DetailScreen extends Component {
 
 DetailScreen.navigationOptions = ({navigation}) => ({
   title: navigation.getParam('title'),
+  headerRight: (
+    <TouchableOpacity 
+      style={styles.btn}
+      onPress={() => WebBrowser.openBrowserAsync(navigation.getParam('imdbUrl'))}  
+      >
+      <MaterialIcons name="open-in-new" size={30} color="white" />
+    </TouchableOpacity>
+  ),
 })
 
 const styles = StyleSheet.create({
@@ -84,7 +95,10 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     fontSize: 14,    
-  }
+  },
+  btn: {
+    margin: 5,
+  },
 });
 
 export default DetailScreen;
