@@ -6,7 +6,7 @@ The films guide app is the second app we build on the course. It builds upon the
 
 The following wireframe should be used as a guide when building the app.
 
-<img src=".screenshots/wireframe.png" height="500">
+<img src="./screenshots/wireframe.png" height="500">
 
 ## Requirements
 
