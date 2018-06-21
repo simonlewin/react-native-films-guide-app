@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 
 import moment from 'moment'
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { WebBrowser } from 'expo';
+
+import Image from 'react-native-image-progress';
+import ProgressBar from 'react-native-progress/Bar';
 
 class DetailScreen extends Component {
 
@@ -25,7 +28,7 @@ class DetailScreen extends Component {
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.imageContainer}>
-            {tmdbImageId !== null ? <Image style={styles.image} source={{uri: image}} /> : null}
+            {tmdbImageId !== null ? <Image style={styles.image} source={{uri: image}} indicator={ProgressBar}/> : null}
           </View>
           <View style={styles.info}>
             {year !== null ? <Text style={[styles.text, styles.year]}>{`Released in ${year}`}</Text> : null}

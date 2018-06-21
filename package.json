@@ -23,6 +23,8 @@
     "moment": "^2.22.2",
     "react": "16.3.1",
     "react-native": "~0.55.2",
+    "react-native-image-progress": "^1.1.1",
+    "react-native-progress": "^3.5.0",
     "react-navigation": "^2.4.1"
   }
 }
