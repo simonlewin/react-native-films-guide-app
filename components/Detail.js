@@ -1,48 +1,50 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, StyleSheet } from 'react-native';
 
 import moment from 'moment'
-
-import { MaterialIcons } from '@expo/vector-icons';
-import { WebBrowser } from 'expo';
 
 import Image from 'react-native-image-progress';
 import ProgressBar from 'react-native-progress/Bar';
 
-class DetailScreen extends Component {
+import Rating from './Rating'
 
+class Detail extends Component {
   render() {
-    const {year, synopsis, tmdbImageId, tmdbRating, showtimes} = this.props.navigation.getParam('item');
+    const {year, synopsis, tmdbImageId, tmdbRating, showtimes} = this.props.item;
 
     const image = `https://image.tmdb.org/t/p/original/${tmdbImageId}.jpg`
-
-    if (tmdbRating >= 60) {
-      ratingColor = {color: '#265819'}
-    } else if (tmdbRating >= 40){
-      ratingColor = {color: '#71500f'}
-    } else {
-      ratingColor = {color: '#7e2310'}
-    }
 
     return (
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.imageContainer}>
-            {tmdbImageId !== null ? <Image style={styles.image} source={{uri: image}} indicator={ProgressBar}/> : null}
+            {tmdbImageId !== null ? 
+              <Image 
+                style={styles.image} 
+                source={{uri: image}} 
+                indicator={ProgressBar}
+                indicatorProps={{color: '#68aa63'}}
+              /> 
+            : null}
           </View>
           <View style={styles.info}>
             {year !== null ? <Text style={[styles.text, styles.year]}>{`Released in ${year}`}</Text> : null}
             {tmdbRating > 0 ? <Text style={styles.text}>Rating: </Text> : null}
-            {tmdbRating > 0 ? <Text style={[styles.text, ratingColor]}>{`${tmdbRating}%`}</Text> : (null)}
+            {tmdbRating > 0 ? <Rating rating={tmdbRating} /> : (null)}
           </View>
           <View style={styles.showtimesContainer}>
             <Text style={styles.text}>Showtimes:</Text>
             { showtimes.map(
               (times, idx) => {
-                // const showtime = moment(`${times.startsAtDate} ${times.startsAtTime}`).calendar('2017-03-12 16:00');
-                const showtime = moment(`2017-03-13 16:00`).calendar('2017-03-12 16:00');
+                const showtime = moment(`${times.startsAtDate} ${times.startsAtTime}`).calendar();
                 return (
-                  <Text style={styles.paragraph} key={idx} numberOfLines={1}>{showtime} on {times.channel}</Text>
+                  <Text 
+                    style={styles.paragraph} 
+                    key={idx} 
+                    numberOfLines={1}
+                  >
+                    {`${showtime} on ${times.channel}`} 
+                  </Text>
                 ); 
               }
             )}
@@ -53,18 +55,6 @@ class DetailScreen extends Component {
     )
   }
 }
-
-DetailScreen.navigationOptions = ({navigation}) => ({
-  title: navigation.getParam('title'),
-  headerRight: (
-    <TouchableOpacity 
-      style={styles.btn}
-      onPress={() => WebBrowser.openBrowserAsync(navigation.getParam('imdbUrl'))}  
-      >
-      <MaterialIcons name="open-in-new" size={30} color="white" />
-    </TouchableOpacity>
-  ),
-})
 
 const styles = StyleSheet.create({
   container: {
@@ -99,9 +89,6 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: 14,    
   },
-  btn: {
-    margin: 5,
-  },
 });
 
-export default DetailScreen;
+export default Detail;
